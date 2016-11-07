@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.suliga.portal.service.EarthquakeEvent.Features;
+import org.suliga.trantor.service.earthquake.EarthquakeEvent.Features;
 
 @Service
 public class EarthquakeFeed implements EarthquakeService {
@@ -49,7 +49,7 @@ public class EarthquakeFeed implements EarthquakeService {
     	  	for (int i=0;i<6;i++) {
         		if (features.length > i) {
         			StringBuilder sb = new StringBuilder();
-        			sb.append("Magnitude: " + features[i].getProperties().get("mag"));
+        			sb.append("Magnitude: " + oneDecimalPlace(features[i].getProperties().get("mag")));
         			sb.append("<br />");
          			sb.append("Location: " + features[i].getProperties().get("place"));
         			sb.append("<br />");
@@ -66,6 +66,12 @@ public class EarthquakeFeed implements EarthquakeService {
     	return list;
 	}
 	
+	private String oneDecimalPlace(String string) {
+		if (string.contains("."))
+			return string;
+		return string + ".0";
+	}
+
 	private boolean isState(String title) {
 		String s =  title.substring(title.lastIndexOf(" ")+1, title.length());
 		switch (s) {
