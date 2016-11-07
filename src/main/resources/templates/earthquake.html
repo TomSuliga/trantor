@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<meta name="robots" content="nofollow" />
+<meta name="keywords" content="alpha beta charlie" />
+<meta name="description" content="portal1a" />
+<title>Test5</title>
+<link href="css/earthquake.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="page">
+		<header>
+			<h2>Earthquake Activity Report</h2>
+			<nav>
+				<ul id="mainmenu">
+					<li><a href="/">Home</a></li>
+					<li><a href="http://www.bing.com/news/search?q=Earthquake" target="_blank">News</a></li>
+					<li><a href="/earthquake?period=1">Past 24 Hours</a></li>
+					<li><a href="/earthquake?period=2">Past 7 Days</a></li>
+					<li><a href="/earthquake?period=3">Past 30 Days</a></li>
+					<li><a href="/earthquake?period=4">Past 30 Days U.S.</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<div id="content">
+			<aside id="aside1a" class="aside-left">
+				<p class="center">FACTOID</p>
+				An <b>earthquake</b> (also known as a <b>quake</b>, <b>tremor</b> or
+				<b>temblor</b>) is the perceptible shaking of the surface of the
+				Earth, resulting from the sudden release of energy in the Earth's
+				crust that creates seismic waves. Earthquakes can be violent enough
+				to toss people around and destroy whole cities. <a
+					href="https://en.wikipedia.org/wiki/Earthquake" target="_blank">More...</a>
+			</aside>
+			<article id="article1" th:utext="${eqdata[0]}" class="article1">Dummy-0</article>
+			<aside id="aside1b" class="aside-right">
+				<p class="center">FACTOID</p>
+				The <b>1960 Valdivia</b> earthquake or Great Chilean earthquake (Gran terremoto de Chile) of 22 May is
+				the most powerful earthquake ever recorded. Various studies have
+				placed it at 9.4 to 9.6 on the richter scale. It occurred
+				in the afternoon and lasted approximately 10 minutes. <a
+					href="https://en.wikipedia.org/wiki/1960_Valdivia_earthquake"
+					target="_blank">More...</a>
+			</aside>
+
+			<aside id="aside2a" class="aside-left">
+				<p class="center">FACTOID</p>
+				<b>Plate tectonics</b> (from the Late Latin tectonicus "pertaining
+				to building") is a scientific theory describing the large-scale
+				motion of 7 large plates and the movements of a larger number of
+				smaller plates of the Earth's lithosphere, over the last millions of
+				years. <a href="https://en.wikipedia.org/wiki/Plate_tectonics"
+					target="_blank">More...</a>
+			</aside>
+			<article id="article2a" th:utext="${eqdata[1]}" class="article2">Dummy-1</article>
+			<article id="article2b" th:utext="${eqdata[2]}" class="article2">Dummy-2</article>
+			<aside id="aside2b" class="aside-right">
+				<p class="center">FACTOID</p>
+				In geology, a <b>fault</b> is a planar fracture or discontinuity in
+				a volume of rock, across which there has been significant
+				displacement as a result of rock mass movement. Large faults within
+				the Earth's crust result from the action of plate tectonic forces <a
+					href="https://en.wikipedia.org/wiki/Fault_(geology)"
+					target="_blank">More...</a>
+			</aside>
+
+			<aside id="aside3a" class="aside-left">
+				<p class="center">FACTOID</p>
+				The <b>Richter magnitude scale</b> assigns a magnitude number to
+				quantify the energy released by an earthquake. The Richter scale,
+				developed in the 1930s, is a base-10 logarithmic scale, which
+				defines magnitude as the logarithm of the ratio of the amplitude of
+				the seismic waves to a minor amplitude. <a
+					href="https://en.wikipedia.org/wiki/Richter_magnitude_scale"
+					target="_blank">More...</a>
+			</aside>
+			<article id="article3a" th:utext="${eqdata[3]}" class="article3">Dummy-3</article>
+			<article id="article3b" th:utext="${eqdata[4]}" class="article3">Dummy-4</article>
+			<article id="article3c" th:utext="${eqdata[5]}" class="article3">Dummy-5</article>
+			<aside id="aside3b" class="aside-right">
+				<p class="center">FACTOID</p>
+				<b>Subduction</b> is a geological process that takes place at
+				convergent boundaries of tectonic plates where one plate moves under
+				another and is forced down into the mantle. Regions where this
+				process occurs are known as subduction zones. <a
+					href="https://en.wikipedia.org/wiki/Subduction" target="_blank">More...</a>
+			</aside>
+
+		</div>
+		<footer>
+			<h5>&copy; Tom Suliga 2016</h5>
+		</footer>
+	</div>
+</body>
+
+</html>
