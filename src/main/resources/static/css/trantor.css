@@ -1,0 +1,10 @@
+@CHARSET "ISO-8859-1";
+
+#myjumbotron {
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+
+.btn-lg {
+	margin-right: 10px;
+}
