@@ -41,6 +41,11 @@ public class EarthquakeEvent {
 	public void setBbox(Double[] bbox) {
 		this.bbox = bbox;
 	}
+	
+	@Override
+	public String toString() {
+		return "type=" + type + ", metadata=" + metadata;
+	}
 
 	public static class Features implements Comparable<Features> {
 		private String type;
