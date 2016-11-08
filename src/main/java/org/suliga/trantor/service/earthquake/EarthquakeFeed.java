@@ -34,6 +34,7 @@ public class EarthquakeFeed implements EarthquakeService {
 	   	RestTemplate restTemplate = new RestTemplate();
     	String result = restTemplate.getForObject(getUrl(eqPeriod), String.class);
     	try {
+    		System.out.println("<> result=" + result);
     		ObjectMapper om = new ObjectMapper();
     		EarthquakeEvent event = om.readValue(result, EarthquakeEvent.class);
     		System.out.println("event=" + event);
@@ -139,7 +140,7 @@ public class EarthquakeFeed implements EarthquakeService {
 	@Override
 	public List<String> getTopSixEvents(String period) {
 		if (StringUtils.isEmpty(period))
-			return getTopSixEvents(EarthquakePeriod.DAY);
+			return getTopSixEvents(EarthquakePeriod.MONTH);
 		
 		switch (period) {
 			case "1": return getTopSixEvents(EarthquakePeriod.DAY);
