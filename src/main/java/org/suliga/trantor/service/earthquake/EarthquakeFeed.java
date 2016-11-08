@@ -34,10 +34,10 @@ public class EarthquakeFeed implements EarthquakeService {
 	   	RestTemplate restTemplate = new RestTemplate();
     	String result = restTemplate.getForObject(getUrl(eqPeriod), String.class);
     	try {
-    		System.out.println("<> result=" + result);
+    		//System.out.println("<> result=" + result);
     		ObjectMapper om = new ObjectMapper();
     		EarthquakeEvent event = om.readValue(result, EarthquakeEvent.class);
-    		System.out.println("event=" + event);
+    		//System.out.println("event=" + event);
     		Features[] features = event.getFeatures();
     		
     		if (eqPeriod == EarthquakePeriod.MONTH_US)
