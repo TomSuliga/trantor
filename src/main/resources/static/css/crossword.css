@@ -1,0 +1,205 @@
+body {
+	margin-top: 5px;
+	padding-top: 0px;
+	background-color: white;
+}
+
+#main {
+	margin-left: 10px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	padding-top: 0px;
+	width: 1000px;
+	height: 700px;
+	background-color: white;
+	border: 1px solid #88f;
+}
+
+h1 {
+	color: white;
+    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding-top: 0px;
+    padding-botton: 0px;
+    margin-left: 65px;
+    width: 450px;
+    float: left;
+    background-color: white;
+}
+
+.wonClass {
+	color: #2040ff;
+}
+
+.notWonClass {
+	color: white;
+}
+
+#headingAndImage {
+	/* background-color: orange; */
+	height: 70px;
+	margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-botton: 0px;
+}
+
+#mdImage {
+	margin-left: 10px;
+	margin-top: 10px;
+	background-color: white;
+	width: 360px;
+	float: right;
+}
+
+#crosswordGrid {
+	background-color: white;
+	width: 550px;
+	margin-bottom: 0px;
+	margin-left: 10px;
+}
+
+#gridAndButtons {
+	float: left;
+}
+
+#divButtons {
+	margin-left: 20px;
+	margin-top: 0px;
+	text-align: center;
+}
+
+button {
+	margin-right: 20px;
+	margin-bottom: 10px;
+	font-weight: 500;
+	border: 1px solid #000;
+	border-radius: 4px;
+	padding: 5px 10px;
+	width: 140px;
+}
+
+.clueDirectionWord {
+	margin-left: 20px;
+}
+
+.grid, .gridblack, .gridPrimaryHighlighted, .gridSecondaryHighlighted {
+	width: 36px;
+	height: 36px;
+	margin-bottom: 0px;
+	padding: 0px;
+	float: left;
+	border: 1px solid #222;
+	box-sizing: border-box;
+	/* rounded border */
+	border-radius: 5px;
+}
+
+.gridblack {
+	background-color: #111;
+}
+
+.grid {
+	background-color: white;
+}
+
+.gridPrimaryHighlighted {
+	border: 1px solid black;
+	margin-bottom: 0px;
+	padding: 0px;
+	float: left;
+}
+
+.gridSecondaryHighlighted {
+	border: 1px solid black;
+	margin-bottom: 0px;
+	padding: 0px;
+	float: left;
+}
+
+.gridPrimaryHighlighted, .cluelineHighlighted {
+	background-color: #7af;
+}
+
+button, .gridSecondaryHighlighted, #acrossClues2, #downClues2 {
+	 background-color: #ccf;
+}
+
+.grid:hover, .clueline:hover, .gridSecondaryHighlighted:hover {
+	background-color: #aaa;
+}
+
+#acrossClues2, #downClues2 {
+	width: 410px;
+	height: 285px;
+	float: left;
+	margin-left: 15px;
+	margin-bottom: 5px;
+	margin-top: 0px;
+	overflow-y: auto;
+	font-size: 16px;
+	padding-left: 5px;
+	/* border: 1px solid #333; */
+	border-style: double;
+}
+
+.gridLetterGood, .gridLetterBad {
+	text-align: center;
+	font-family: Arial, Serif;
+	font-size: 20px;
+}
+
+.gridLetterGood {
+	color: black;
+}
+
+.gridLetterBad {
+	color: #e00;
+}
+
+.clueline {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.gridNumber {
+	margin-top: 0px;
+	margin-left: 2px;
+	padding: 0px;
+	font-size: 10px;
+	text-align: left;
+	height: 13px;
+	/* background-color: white; */
+}
+
+.linebreak {
+	clear: both;
+}
+
+footer {
+	font-size: 10px;
+	text-align: center;
+	clear: left;
+	width: 1000px;
+	margin-left: 10px;
+	margin-top: 5px;
+	background-color: white;
+}
+
+#congrats {
+	width: 540px;
+	height: 35px;
+	background-color: white;
+	color: #2040ff;
+	margin-top: 10px;
+	margin-bottom: 0px;
+	margin-left: 10px;
+	margin-right: 0px;
+	font-size: 24px;
+	font-weight: bold;
+	padding-top: 0px;
+	padding-left: 8px;
+}
+
+

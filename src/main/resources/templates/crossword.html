@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!-- <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="org.suliga.portal.service.Grid" %> -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Crossword Puzzle</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="css/crossword.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+<script type="text/javascript" src="js/crossword.js"></script>
+
+</head>
+<body onload="myInit()">
+	<div id="main" 
+		data-httpSession="${httpSession}"
+		data-autoCheck="${autoCheck}">
+		<div id="headingAndImage">
+			<h1 id="mobydick" class="notWonClass" th:text="${title}">Dummy Title</h1>
+			<div id="mdImage">
+				<img src="images/moby-dick.jpg" width=200 height=50 />
+			</div>
+		</div>
+		<div id="gridAndButtons">
+			<div id="crosswordGrid">
+	<!-- 			<block th:each="i : ${#numbers.sequence(0,4)}">
+					<block th:each="j : ${#numbers.sequence(0,4)}">
+						<span th:text="'MB ' + ${i} + ',' + ${j}">Dummy #</span>
+					</block>
+					<br>
+				</block> -->
+				<!-- Thymeleaf Code Begins -->
+				<block th:each="i : ${#numbers.sequence(0,14)}">
+					<block th:each="j : ${#numbers.sequence(0,14)}">
+						<div th:if="${!grid[i][j].isBlocked()}">
+							<div class="grid" 
+								th:id="${i} + ':numberAndLetter:' + ${j}"
+								th:attr="data-row=${i}, data-col=${j}"
+								onclick='gridMouseClicked(this)'>
+								<div class="gridNumber">
+									<span th:if="${grid[i][j].getAcrossNumber() > 0}" 
+										th:text="${grid[i][j].getAcrossNumber()}">
+									</span>
+									<span th:if="${grid[i][j].getAcrossNumber() == 0 && grid[i][j].getDownNumber() > 0}" 
+										th:text="${grid[i][j].getDownNumber()}">
+									</span>
+								</div>
+								<div class="gridLetterGood" 
+									 th:id="${i} + ':letter:' + ${j}" 
+									 th:attr="data-row=${i}, 
+									 		  data-col=${j},
+									 		  data-realLetter=${grid[i][j].getRealLetter()},
+									 		  data-userLetter=${grid[i][j].getUserLetter()},
+									 		  data-rowLeftLen=${grid[i][j].getRowLeftLen()}, 
+									 		  data-rowRightLen=${grid[i][j].getRowRightLen()},
+									 	      data-colUpLen=${grid[i][j].getColUpLen()},
+									 		  data-colDownLen=${grid[i][j].getColDownLen()},
+									 		  data-acrossNumber=${grid[i][j].getAcrossNumber()},
+									 		  data-downNumber=${grid[i][j].getDownNumber()}" >
+									<span th:if="${grid[i][j].isVisible()}" th:text="${grid[i][j].getUserLetter()}"></span>
+								</div>
+							</div>
+						</div>
+						<div th:if="${grid[i][j].isBlocked()}">
+							<div class="gridblack">&nbsp;</div>
+						</div>
+					</block>
+					<div class="linebreak"></div>
+				</block>				
+				<!-- Thymeleaf Code Ends -->
+				
+				<!-- JSP Code Begins -->
+				<!--
+				<c:forEach var="i" begin="0" end="14" step="1">
+					<c:forEach var="j" begin="0" end="14" step="1">
+						<c:if test="${!grid[i][j].isBlocked()}">
+							<div class="grid" 
+								id="${i}:numberAndLetter:${j}" 
+								data-row="${i}" 
+								data-col="${j}" 
+								onclick='gridMouseClicked(this)'>
+								<div class="gridNumber">
+									<c:if test="${grid[i][j].getAcrossNumber() > 0}">
+										<c:out value="${grid[i][j].getAcrossNumber()}" />
+									</c:if>
+									<c:if test="${grid[i][j].getAcrossNumber() == 0 && grid[i][j].getDownNumber() > 0}">
+										<c:out value="${grid[i][j].getDownNumber()}" />
+									</c:if>
+								</div>
+								<div class="gridLetterGood" 
+									 id="${i}:letter:${j}" 
+									 data-row="${i}" 
+									 data-col="${j}" 
+									 data-realLetter="${grid[i][j].getRealLetter()}" 
+									 data-userLetter="${grid[i][j].getUserLetter()}" 
+									 data-rowLeftLen="${grid[i][j].getRowLeftLen()}" 
+									 data-rowRightLen="${grid[i][j].getRowRightLen()}" 
+									 data-colUpLen="${grid[i][j].getColUpLen()}" 
+									 data-colDownLen="${grid[i][j].getColDownLen()}" 
+									 data-acrossNumber="${grid[i][j].getAcrossNumber()}" 
+									 data-downNumber="${grid[i][j].getDownNumber()}" >
+									<c:if test="${grid[i][j].isVisible()}">
+										<c:out value="${grid[i][j].getUserLetter()}" />
+									</c:if>
+								</div>
+							</div>
+						</c:if>
+						<c:if test="${grid[i][j].isBlocked()}">
+							<div class="gridblack">&nbsp;</div>
+						</c:if>
+					</c:forEach>
+					<div class="linebreak"></div>
+				</c:forEach>
+				-->
+				<!-- JSP Code Ends -->
+			</div>
+			<!-- crosswordGrid -->
+			<marquee id="congrats" scrollamount="10" behavior="alternate" direction="left"></marquee>
+			<div id="divButtons">
+				<button id="btnAutoCheck" onclick='btnAutoCheck(this)'>Disable Auto Check</button>
+				<button onclick='btnSolveLetter()'>Solve Letter</button>
+				<button onclick='btnSolveWord()'>Solve Word</button>
+			</div>
+		</div>
+		<!-- Thymeleaf Begin -->
+				<div id="acrossClues">
+			<span class="clueDirectionWord">Across:</span>
+			<div id="acrossClues2">
+				<block th:each="i : ${#numbers.sequence(0,14)}">
+					<block th:each="j : ${#numbers.sequence(0,14)}">
+							<div th:if="${grid[i][j].isAcrossFilled()}"
+							    class="clueline" 
+								th:id="${i} + ':acrossClue:' + ${j}" 
+								onclick='clueAcrossMouseClicked(this)' 
+								th:attr="data-row=${i}" 
+								th:attr="data-col=${j}"
+								th:text="${grid[i][j].getAcrossNumber()} + ':' + ${grid[i][j].getAcrossClue()}">
+							</div>		
+					</block>
+				</block>
+			</div>
+		</div>
+		<br />
+		<div id="downClues">
+			<span class="clueDirectionWord">Down:</span>
+			<div id="downClues2">
+				<block th:each="i : ${#numbers.sequence(0,14)}">
+					<block th:each="j : ${#numbers.sequence(0,14)}">
+							<div th:if="${grid[i][j].isDownFilled()}"
+							    class="clueline" 
+								th:id="${i} + ':downClue:' + ${j}" 
+								onclick='clueDownMouseClicked(this)' 
+								th:attr="data-row=${i}" 
+								th:attr="data-col=${j}"
+								th:text="${grid[i][j].getDownNumber()} + ':' + ${grid[i][j].getDownClue()}">
+							</div>
+					</block>
+				</block>
+			</div>
+		</div>
+		<!-- Thymeleaf End -->
+		
+		<!-- JSP Begin -->
+		<!--
+		<div id="acrossClues">
+			<span class="clueDirectionWord">Across:</span>
+			<div id="acrossClues2">
+				<c:forEach var="i" begin="0" end="14" step="1">
+					<c:forEach var="j" begin="0" end="14" step="1">
+						<c:if test="${grid[i][j].isAcrossFilled()}">
+							<div class="clueline" 
+								id="${i}:acrossClue:${j}" 
+								onclick='clueAcrossMouseClicked(this)' 
+								data-row="${i}" 
+								data-col="${j}" >
+								<c:out value="${grid[i][j].getAcrossNumber()}" />
+								:
+								<c:out value="${grid[i][j].getAcrossClue()}" />
+							</div>
+						</c:if>
+					</c:forEach>
+				</c:forEach>
+			</div>
+		</div>
+		<br />
+		<div id="downClues">
+			<span class="clueDirectionWord">Down:</span>
+			<div id="downClues2">
+				<c:forEach var="i" begin="0" end="14" step="1">
+					<c:forEach var="j" begin="0" end="14" step="1">
+						<c:if test="${grid[i][j].isDownFilled()}">
+							<div class="clueline" 
+								id="${i}:downClue:${j}" 
+								onclick='clueDownMouseClicked(this)' 
+								data-row="${i}" 
+								data-col="${j}" >
+								<c:out value="${grid[i][j].getDownNumber()}" />
+								:
+								<c:out value="${grid[i][j].getDownClue()}" />
+							</div>
+						</c:if>
+					</c:forEach>
+				</c:forEach>
+			</div>
+		</div>
+		-->
+		<!-- JSP End -->
+	</div>
+	<!-- main -->
+	<footer>&copy; Tom Suliga 2016</footer>
+</body>
+
+</html>
