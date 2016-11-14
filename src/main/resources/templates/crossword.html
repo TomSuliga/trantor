@@ -30,8 +30,8 @@
 					<br>
 				</block> -->
 				<!-- Thymeleaf Code Begins -->
-				<block th:each="i : ${#numbers.sequence(0,14)}">
-					<block th:each="j : ${#numbers.sequence(0,14)}">
+				<div th:each="i : ${#numbers.sequence(0,14)}">
+					<div th:each="j : ${#numbers.sequence(0,14)}">
 						<div th:if="${!grid[i][j].isBlocked()}">
 							<div class="grid" 
 								th:id="${i} + ':numberAndLetter:' + ${j}"
@@ -64,9 +64,9 @@
 						<div th:if="${grid[i][j].isBlocked()}">
 							<div class="gridblack">&nbsp;</div>
 						</div>
-					</block>
+					</div>
 					<div class="linebreak"></div>
-				</block>				
+				</div>				
 				<!-- Thymeleaf Code Ends -->
 				
 				<!-- JSP Code Begins -->
@@ -123,7 +123,7 @@
 			</div>
 		</div>
 		<!-- Thymeleaf Begin -->
-				<div id="acrossClues">
+			<div id="acrossClues">
 			<span class="clueDirectionWord">Across:</span>
 			<div id="acrossClues2">
 				<block th:each="i : ${#numbers.sequence(0,14)}">
@@ -132,8 +132,7 @@
 							    class="clueline" 
 								th:id="${i} + ':acrossClue:' + ${j}" 
 								onclick='clueAcrossMouseClicked(this)' 
-								th:attr="data-row=${i}" 
-								th:attr="data-col=${j}"
+								th:attr="data-row=${i}, data-col=${j}"
 								th:text="${grid[i][j].getAcrossNumber()} + ':' + ${grid[i][j].getAcrossClue()}">
 							</div>		
 					</block>
@@ -150,8 +149,7 @@
 							    class="clueline" 
 								th:id="${i} + ':downClue:' + ${j}" 
 								onclick='clueDownMouseClicked(this)' 
-								th:attr="data-row=${i}" 
-								th:attr="data-col=${j}"
+								th:attr="data-row=${i}, data-col=${j}"
 								th:text="${grid[i][j].getDownNumber()} + ':' + ${grid[i][j].getDownClue()}">
 							</div>
 					</block>
