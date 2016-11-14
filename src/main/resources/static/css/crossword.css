@@ -22,7 +22,7 @@ h1 {
     margin-bottom: 10px;
     padding-top: 0px;
     padding-botton: 0px;
-    margin-left: 65px;
+    margin-left: 75px;
     width: 450px;
     float: left;
     background-color: white;
@@ -37,7 +37,7 @@ h1 {
 }
 
 #headingAndImage {
-	/* background-color: orange; */
+/* 	background-color: orange; */
 	height: 70px;
 	margin-top: 0px;
     margin-bottom: 0px;

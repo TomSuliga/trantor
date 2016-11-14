@@ -46,6 +46,11 @@ li a:hover {
 	color: black;
 }
 
+#period1 {
+	color: blue;
+	background-color: yellow;
+}
+
 article {
 	height: 250px;
 	float: left;

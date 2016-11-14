@@ -404,7 +404,7 @@ function prevLetterDown() {
 function clueAcrossMouseClicked(e) {
 	var row = parseInt(e.getAttribute("data-row"));
 	var col = parseInt(e.getAttribute("data-col"));
-	
+//	alert("e=" + e + ", row=" + row + ", col=" + col);
 	if (sameClue(true,row,col))
 		return;
 	
