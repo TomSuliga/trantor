@@ -1,14 +1,8 @@
 package org.suliga.trantor.service.crossword;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
