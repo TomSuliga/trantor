@@ -1,5 +1,7 @@
 package org.suliga.trantor.service;
 
-public interface MinesweeperService {
+import org.suliga.trantor.service.minesweeper.Grid;
 
+public interface MinesweeperService {
+	public Grid getGrid();
 }

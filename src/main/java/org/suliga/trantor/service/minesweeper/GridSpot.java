@@ -6,7 +6,7 @@ public class GridSpot {
 	
 	public GridSpot() {
 		visible = false;
-		type = GridType.EMPTY;
+		type = GridType.CLEAR;
 	}
 	public boolean isVisible() {
 		return visible;

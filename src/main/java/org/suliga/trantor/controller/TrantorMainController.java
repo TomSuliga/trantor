@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.suliga.trantor.service.MinesweeperService;
 import org.suliga.trantor.service.crossword.CrosswordPuzzleService;
 import org.suliga.trantor.service.earthquake.EarthquakeService;
 
@@ -17,6 +18,9 @@ public class TrantorMainController {
 	
 	@Autowired
 	private CrosswordPuzzleService crosswordPuzzleService;
+	
+	@Autowired
+	private MinesweeperService minesweeperService;
 	
 	@RequestMapping("/")
 	public String home(Model model) { // Model = interface, ModelMap = class
@@ -39,6 +43,12 @@ public class TrantorMainController {
 		model.addAttribute("httpSession",session);
 		model.addAttribute("autoCheck", crosswordPuzzleService.getAutoCheck(session));
 		return "crossword";
+	}
+	
+	@RequestMapping(value="/minesweeper", method=RequestMethod.GET)
+	public String getMinesweeper(Model model) {
+		model.addAttribute("grid", minesweeperService.getGrid());
+		return "minesweeper";
 	}
 	
 	@RequestMapping("/admin")

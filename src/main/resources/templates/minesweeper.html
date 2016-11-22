@@ -2,12 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Minesweeper</title>
+<link href="css/minesweeper.css" type="text/css" rel="stylesheet" />
+<!-- <script type="text/javascript" src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script> -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/minesweeper.js"></script>
 </head>
 <body>
-<div id="main">
-	<div th:each="i : ${#numbers.sequence(0,grid.)}">
-		<div th:each="j : ${#numbers.sequence(0,14)}">
-</div>
+	<h2>Minesweeper</h2>
+	<div id="main">
+		<div th:each="i : ${#numbers.sequence(0,grid.getRows()-1)}">
+			<div th:each="j : ${#numbers.sequence(0,grid.getCols()-1)}">
+				<div class="gridSpotHidden" 
+					 th:id="${i + ':' + j}"
+					 th:attr="data-row=${i},
+					          data-col=${j},
+					          data-type=${grid.getSpot(i,j).getType()}"></div>
+			</div>
+			<div class="break"></div>
+		</div>
+	</div>
 </body>
 </html>
