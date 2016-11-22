@@ -1,30 +1,12 @@
 'use strict';
 
-/*$(document).ready(function() {
-	$('.gridSpotHidden').on('click', gridSpotClicked);
-});
-
-function gridSpotClicked(e) {
-	const elem = $(this);
-	//alert("id=" + elem.attr('id') + ', ' + elem.attr('data-row') + ', ' + elem.attr('data-col') + ', ' + elem.attr('data-type'));
-	elem.removeClass('gridSpotHidden');
-	const gridType = elem.attr('data-type');
-	if (gridType === 'MINE') {
-		elem.addClass('gridSpotMine');
-	}
-	else if (gridType === 'CLEAR') {
-		elem.addClass('gridSpotClear');
-	}
-	else {
-		const letters = gridType.split("");
-		const num = gridType[1];
-		elem.addClass('gridSpotLetter');
-		elem.text(num);
-	}
-}*/
-
 $(document).ready(function() {
 	$('.gridSpotHidden').mousedown(myMouseDown);
+	$('#btnShowAll').on('click', showAll);
+});
+
+$(document).contextmenu(function() {
+    return false;
 });
 
 const stompUrl = 'http://' + window.location.host + '/minesweeper3';
@@ -35,9 +17,47 @@ stomp.connect({}, function(frame) {
 	//stomp.subscribe('/minesweeper/resultRowCols', function(incoming) {
 	stomp.subscribe('/abc/xyz', function(incoming) {
 		//console.log("incoming=" + incoming);
-		const someObject = JSON.parse(incoming.body);
+		const rowCols = JSON.parse(incoming.body);
+		//alert('rowCols=' + rowCols.length)
+		for (let i=0;i<rowCols.length;i++) {
+			let row = rowCols[i].row;
+			let col = rowCols[i].col;
+			showGridSpot(row,col);
+		}
 	});
 });
+
+function showGridSpot(row, col) {
+	let elem = document.getElementById(row + ":" + col);
+	if (elem == undefined) {
+		return;
+	}
+	let gridType = elem.getAttribute('data-type');
+
+   	if (gridType === 'MINE') {
+   		elem.className = 'gridSpotMine';
+	}
+	else if (gridType === 'CLEAR') {
+		elem.className = 'gridSpotClear';
+	}
+	else if (gridType === 'POSSIBLE') {
+		elem.className = 'gridSpotPossible';
+	}
+	else {
+		let letters = gridType.split("");
+		let num = gridType[1];
+		elem.className = 'gridSpotLetter';
+		elem.innerText = num;
+	}
+}
+
+function showAll() {
+	for (let i=0;i<100;i++) {
+		for (let j=0;j<100;j++) {
+			showGridSpot(i,j);
+		}
+	}
+}
 
 function myMouseDown(event) {
 	const elem = $(this);
@@ -46,22 +66,9 @@ function myMouseDown(event) {
         	//alert("id=" + elem.attr('id') + ', ' + elem.attr('data-row') + ', ' + elem.attr('data-col') + ', ' + elem.attr('data-type'));
             //alert('Left Mouse button pressed.');
         	
-  /*      	elem.removeClass('gridSpotHidden');
-        	const gridType = elem.attr('data-type');
-        	if (gridType === 'MINE') {
-        		elem.addClass('gridSpotMine');
-        	}
-        	else if (gridType === 'CLEAR') {
-        		elem.addClass('gridSpotClear');
-        	}
-        	else {
-        		const letters = gridType.split("");
-        		const num = gridType[1];
-        		elem.addClass('gridSpotLetter');
-        		elem.text(num);
-        	}*/
+
         	let payload = JSON.stringify({
-        		'row':'3', 'col':'7'
+        		'row':elem.attr('data-row'), 'col':elem.attr('data-col')
         	});
         	stomp.send("/minesweeper2/selectRowCol", {}, payload);
         	
@@ -70,7 +77,15 @@ function myMouseDown(event) {
             alert('Middle Mouse button pressed.');
             break;
         case 3:
-            alert('Right Mouse button pressed.');
+            //alert('Right Mouse button pressed.');
+        	if (elem.attr('class') == 'gridSpotPossible') {
+        		elem.attr('class','gridSpotClear');
+        		elem.text("");
+        	}
+        	else {
+        		elem.attr('class','gridSpotPossible');
+        		elem.text(String.fromCharCode(211));
+        	}
             break;
         default:
             alert('You have a strange Mouse!');

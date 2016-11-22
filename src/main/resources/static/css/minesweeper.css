@@ -9,20 +9,24 @@ h2 {
 	margin: 1em;
 }
 
+button {
+	margin: .5em;
+}
+
 #main {
 	border: 5px solid #666;
 	margin-left: 1em;
 	background-color: #bbb;
 }
 
-.gridSpotHidden, .gridSpotClear, .gridSpotMine, .gridSpotLetter {
+.gridSpotHidden, .gridSpotClear, .gridSpotMine, .gridSpotLetter, .gridSpotPossible {
 	width: 25px;
 	height: 25px;
 	box-sizing: border-box;
 	float: left;
 }
 
-.gridSpotHidden {
+.gridSpotHidden, .gridSpotPossible {
 	background-color: #ccc;
 	border-style: solid;
 	border-top-color: #fff;
@@ -43,6 +47,7 @@ h2 {
 .gridSpotMine {
 	background-color: red;
 	border-radius: 12px;
+	text-align: center;
 }
 
 .gridSpotLetter {
@@ -50,6 +55,13 @@ h2 {
 	text-align: center;
 	font-weight: 900;
 	font-size: 1.3em;
+}
+
+.gridSpotPossible {
+	color: red;
+	text-align: center;
+	font-weight: 900;
+	font-size: 1.1em;
 }
 
 .break {

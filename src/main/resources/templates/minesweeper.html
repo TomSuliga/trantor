@@ -17,12 +17,13 @@
 			<div th:each="j : ${#numbers.sequence(0,grid.getCols()-1)}">
 				<div class="gridSpotHidden" 
 					 th:id="${i + ':' + j}"
-					 th:attr="data-row=${i},
-					          data-col=${j},
-					          data-type=${grid.getSpot(i,j).getType()}"></div>
+					 th:attr="data-row=${i}, data-col=${j}, data-type=${grid.getSpot(i,j).getType()}"></div>
 			</div>
 			<div class="break"></div>
 		</div>
+	</div>
+		<button id="btnShowAll">Debug Show All</button>
+	<div>
 	</div>
 </body>
 </html>
