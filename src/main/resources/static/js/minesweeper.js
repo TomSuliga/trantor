@@ -9,6 +9,7 @@ $(document).contextmenu(function() {
     return false;
 });
 
+//const stompUrl = 'https://' + window.location.host + '/minesweeper3';
 const stompUrl = 'http://' + window.location.host + '/minesweeper3';
 const stompSock = new SockJS(stompUrl);
 const stomp = Stomp.over(stompSock);
