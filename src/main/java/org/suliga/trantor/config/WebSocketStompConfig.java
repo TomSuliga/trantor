@@ -12,15 +12,15 @@ public class WebSocketStompConfig extends AbstractWebSocketMessageBrokerConfigur
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/minesweeper3").withSockJS();
+		registry.addEndpoint("/minesweeper1").withSockJS();
 	}
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		// to subscribed client
-		registry.enableSimpleBroker("/minesweeper", "/abc");
+		// to subscribed client - prefix
+		registry.enableSimpleBroker("/topic");
 		
-		// to server (from web client javascript via stomp.send)
-		registry.setApplicationDestinationPrefixes("/minesweeper", "/minesweeper2");
+		// to server (from web client javascript via stomp.send) - prefix
+		registry.setApplicationDestinationPrefixes("/minesweeper2");
 	}
 }

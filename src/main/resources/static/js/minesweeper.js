@@ -9,14 +9,14 @@ $(document).contextmenu(function() {
     return false;
 });
 
-//const stompUrl = 'https://' + window.location.host + '/minesweeper3';
-const stompUrl = 'http://' + window.location.host + '/minesweeper3';
+//const stompUrl = 'https://' + window.location.host + '/minesweeper1';
+const stompUrl = 'http://' + window.location.host + '/minesweeper1';
 const stompSock = new SockJS(stompUrl);
 const stomp = Stomp.over(stompSock);
 
 stomp.connect({}, function(frame) {
 	//stomp.subscribe('/minesweeper/resultRowCols', function(incoming) {
-	stomp.subscribe('/abc/xyz', function(incoming) {
+	stomp.subscribe('/topic/minesweeper3', function(incoming) {
 		//console.log("incoming=" + incoming);
 		const rowCols = JSON.parse(incoming.body);
 		//alert('rowCols=' + rowCols.length)
@@ -71,7 +71,7 @@ function myMouseDown(event) {
         	let payload = JSON.stringify({
         		'row':elem.attr('data-row'), 'col':elem.attr('data-col')
         	});
-        	stomp.send("/minesweeper2/selectRowCol", {}, payload);
+        	stomp.send("/minesweeper2/clickedRowCol", {}, payload);
         	
             break;
         case 2:

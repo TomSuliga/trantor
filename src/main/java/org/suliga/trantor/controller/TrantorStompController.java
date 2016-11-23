@@ -20,12 +20,9 @@ public class TrantorStompController {
 	@Autowired
 	MinesweeperService msService;
 	
-	@MessageMapping("/selectRowCol")
-	//@SendTo("/minesweeper/resultRowCols")
-	@SendTo("/abc/xyz")
+	@MessageMapping("/clickedRowCol")
+	@SendTo("/topic/minesweeper3")
 	public Set<RowCol> handleMessage(RowCol incoming) {
-		//System.out.println("Incoming RowCol = " + incoming);
-		//initiateSend();
 		int row = incoming.getRow();
 		int col = incoming.getCol();
 		return msService.processClickedSpot(row, col);
@@ -34,8 +31,7 @@ public class TrantorStompController {
 	private void initiateSend() {
 		List<RowCol> list = new ArrayList<>();
 		list.add(new RowCol(2,3));
-		//mt.convertAndSend("/minesweeper/resultRowCols", list);
-		mt.convertAndSend("/abc/xyz", list);
+		mt.convertAndSend("/topic/minesweeper3", list);
 	}
 }
 
