@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang=”en” xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Temp</title>
+</head>
+<body>
+	<h1 th:text="${safeText}">Temp Heading</h1>
+	<p th:utext="${unsafeText}">Not yet bold</p>
+	<div th:each="counter:${#numbers.sequence(1,3)}"> <!-- Inclusive so 1,2,3 -->
+		<p th:text="${'This is line: ' + counter}">Dummy</p>
+	</div>
+	<div>
+		<p th:if="${firstName < 'N'}">A-M</p>
+		<p th:if="${firstName >= 'N'}">N-Z</p>
+	</div>
+	
+	<div th:switch="${firstName}"> 
+		<p th:case="'Tom'">Found Tom</p>
+		<p th:case="*">Default: <span th:text="${firstName}"></span></p> 
+	</div>
+	
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Age</th>
+			<th>Hobby</th>
+		</tr>
+		<tr th:each="person:${persons}">
+			<td th:text="${person.name}">John Doe</td>
+			<td th:text="${person.age}">21</td>
+			<td th:text="${person.hobby}">Reporter</td>
+		</tr>
+	</table>
+</body>
+</html>
