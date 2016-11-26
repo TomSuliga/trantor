@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<div th:if="${message}">
+		<h2 th:text="${message}"/>
+	</div>
+	<div>
+	_csrf.token = <span th:text="${_csrf.token}">Dummy</span><br>
+	_csrf.parameterName = <span th:text="${_csrf.parameterName}">Dummy</span><br>
+	</div>
+
+	<div>
+		<form method="POST" enctype="multipart/form-data" action="/myupload">
+			<table>
+				<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+				<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+			</table>
+ 	   		<input type="hidden" 
+           		   th:name="${_csrf.parameterName}" 
+           		   th:value="${_csrf.token}" />
+		</form>
+	</div>
+
+	<div>
+		<ul>
+			<li th:each="file : ${files}">
+				<a th:href="${file}" th:text="${file}" />
+			</li>
+		</ul>
+	</div>
+
+</body>
+</html>
+
