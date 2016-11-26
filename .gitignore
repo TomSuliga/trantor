@@ -28,3 +28,6 @@ gradlew
 gradlew.bat
 /gradle/
 .gradle
+
+### Others ###
+src/main/webapp/uploads

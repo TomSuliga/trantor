@@ -1,0 +1,76 @@
+@CHARSET "ISO-8859-1";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+h2 {
+	margin: 1em;
+}
+
+button {
+	margin: .5em;
+}
+
+#main {
+	border: 5px solid #666;
+	margin-left: 1em;
+	background-color: #bbb;
+}
+
+.gridSpotHidden, .gridSpotClear, .gridSpotMine, .gridSpotLetter, .gridSpotPossible {
+	width: 25px;
+	height: 25px;
+	box-sizing: border-box;
+	float: left;
+}
+
+.gridSpotHidden, .gridSpotPossible {
+	background-color: #ccc;
+	border-style: solid;
+	border-top-color: #fff;
+	border-left-color: #fff;
+	border-right-color: #888;
+	border-bottom-color: #888;
+	border-radius: 3px;
+}
+
+.gridSpotClear, .gridSpotMine, .gridSpotLetter {
+	border: 1px solid #999;
+}
+
+.gridSpotClear, .gridSpotLetter {
+	background-color: #bbb;
+}
+
+.gridSpotMine {
+	background-color: red;
+	border-radius: 12px;
+	text-align: center;
+}
+
+.gridSpotLetter {
+	color: blue;
+	text-align: center;
+	font-weight: 900;
+	font-size: 1.3em;
+}
+
+.gridSpotPossible {
+	color: red;
+	text-align: center;
+	font-weight: 900;
+	font-size: 1.1em;
+}
+
+.break {
+	clear: both;
+}
+
+
+
+
+
+
+
