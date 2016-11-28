@@ -79,7 +79,7 @@ public class TrantorMainController {
 		return "dba";
 	}
 	
-	@RequestMapping("/temp")
+	@RequestMapping("/test1")
 	public String temp(Model model) { // Model = interface, ModelMap = class
 		model.addAttribute("safeText", "Trantor Tech");
 		model.addAttribute("unsafeText", "This is <b>Bold</b>");
@@ -90,7 +90,7 @@ public class TrantorMainController {
 		persons.add(new Person("James Bond", 37, "Secret Agent"));
 		persons.add(new Person("Lisa Simpson", 13, "Actress"));
 		model.addAttribute("persons",persons);
-		return "temp";
+		return "test1";
 	}
 	
 	@RequestMapping("/try1")
@@ -98,6 +98,7 @@ public class TrantorMainController {
 		model.addAttribute("name","Tom");
 		model.addAttribute("age","54");
 		model.addAttribute("id","123XYZ");
+		System.out.println("server.context-path=" + System.getProperty("server.context-path"));
 		return "jsp/try1";
 	}
 	

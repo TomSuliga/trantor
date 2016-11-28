@@ -1,5 +1,7 @@
 package org.suliga.trantor.config;
 
+import javax.servlet.ServletContext;
+
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -11,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -48,13 +51,27 @@ public class TrantorMainConfig {
 		return connector;
 	}*/
 	
-	@Bean
+/*	@Bean
     public ViewResolver jspViewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        //ViewResolver resolver = new InternalResourceViewResolver();
+		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
         resolver.setPrefix("/WEB-INF/");
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
         resolver.setViewNames("jsp/*");
+        resolver.setOrder(1);
+        return resolver;
+    }*/
+	
+	@Bean
+    public ViewResolver jspViewResolver() {
+        //ViewResolver resolver = new InternalResourceViewResolver();
+		InternalResourceViewResolver  resolver = new InternalResourceViewResolver ();
+        resolver.setPrefix("/WEB-INF/");
+        resolver.setSuffix(".jsp");
+        //resolver.setViewClass(JstlView.class);
+        resolver.setViewNames("jsp/*");
+        //resolver.s
         resolver.setOrder(1);
         return resolver;
     }
