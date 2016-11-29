@@ -150,7 +150,7 @@ public class TrantorMainController {
 	@GetMapping("/rarebooks")
 	@Transactional
 	public String getRareBooks(Model model) {
-		System.out.println("sessionFactory=" + sessionFactory);
+		model.addAttribute("mainHeading", "Rare Books");
 		List<RareBook> list = (List<RareBook>) rareBookRepository.findAll();
 		model.addAttribute("rareBooks", list);
 		
@@ -164,8 +164,8 @@ public class TrantorMainController {
 		//Session session = sessionFactory.openSession();
 		//System.out.println("sessionFactory.openSession()=" + session);
 		//session.beginTransaction();
-		rareBookRepository.save(new RareBook("X Title 1", "X Author 1", Condition.EXCELLENT, true));
-		rareBookRepository.save(new RareBook("X Title 2", "X Author 2", Condition.EXCELLENT, true));
+		//rareBookRepository.save(new RareBook("X Title 1", "X Author 1", Condition.EXCELLENT, true));
+		//rareBookRepository.save(new RareBook("X Title 2", "X Author 2", Condition.EXCELLENT, true));
 		//if (System.currentTimeMillis() > 1) {
 		//	throw new RuntimeException("temp");
 		//}
