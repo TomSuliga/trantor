@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="us" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>Rare Books</title>
+<link href="css/rarebooks.css" rel="stylesheet">
+</head>
+
+<body>
+<h1>Rare Books</h1>
+<table>
+	<tr>
+		<th>Author</th>
+		<th>Title</th>
+	</tr>
+	<tr th:each="book:${rareBooks}">
+		<td th:text="${book.author}">Author</td>
+		<td th:text="${book.title}">Title</td>
+	</tr>
+</table>
+
+</body>
+
+</html>

@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.suliga.trantor.model.Greeting;
+import org.suliga.trantor.model.Condition;
 import org.suliga.trantor.model.Person;
+import org.suliga.trantor.model.RareBook;
+import org.suliga.trantor.model.RareBookRepository;
 import org.suliga.trantor.service.MinesweeperService;
 import org.suliga.trantor.service.crossword.CrosswordPuzzleService;
 import org.suliga.trantor.service.earthquake.EarthquakeService;
@@ -37,6 +41,12 @@ public class TrantorMainController {
 	
 	@Autowired
     private HttpServletRequest request;
+	
+	@Autowired
+	private RareBookRepository rareBookRepository;
+	
+    @Autowired
+    private SessionFactory sessionFactory;
 	
 	@RequestMapping("/")
 	public String home(Model model) { // Model = interface, ModelMap = class
@@ -136,6 +146,32 @@ public class TrantorMainController {
 
         return "redirect:/myupload";
     }
+	
+	@GetMapping("/rarebooks")
+	@Transactional
+	public String getRareBooks(Model model) {
+		System.out.println("sessionFactory=" + sessionFactory);
+		List<RareBook> list = (List<RareBook>) rareBookRepository.findAll();
+		model.addAttribute("rareBooks", list);
+		
+		//rareBookRepository.count();
+		//rareBookRepository.delete(entity);
+		//rareBookRepository.delete(id);
+		//rareBookRepository.deleteAll();
+		//rareBookRepository.findOne(id);
+		//rareBookRepository.save(entity);
+		
+		//Session session = sessionFactory.openSession();
+		//System.out.println("sessionFactory.openSession()=" + session);
+		//session.beginTransaction();
+		rareBookRepository.save(new RareBook("X Title 1", "X Author 1", Condition.EXCELLENT, true));
+		rareBookRepository.save(new RareBook("X Title 2", "X Author 2", Condition.EXCELLENT, true));
+		//if (System.currentTimeMillis() > 1) {
+		//	throw new RuntimeException("temp");
+		//}
+		//session.getTransaction().commit();
+		return "rarebooks";
+	}
 }
 
 

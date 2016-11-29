@@ -1,28 +1,37 @@
 package org.suliga.trantor.config;
 
-import javax.servlet.ServletContext;
-
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.hibernate.SessionFactory;
+import org.hibernate.jpa.HibernateEntityManagerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-import org.thymeleaf.templateresolver.TemplateResolver;
 
 @Configuration
+//@ComponentScan
+//@EnableAutoConfiguration
+//@EnableTransactionManagement
 public class TrantorMainConfig {
-
+    @Autowired
+    @Bean(name="sessionFactory")
+    public SessionFactory sessionFactory(HibernateEntityManagerFactory factory) {
+        return factory.getSessionFactory();
+    }  
+    
+	@Bean
+    public ViewResolver jspViewResolver() {
+        //ViewResolver resolver = new InternalResourceViewResolver();
+		InternalResourceViewResolver  resolver = new InternalResourceViewResolver ();
+        resolver.setPrefix("/WEB-INF/");
+        resolver.setSuffix(".jsp");
+        //resolver.setViewClass(JstlView.class);
+        resolver.setViewNames("jsp/*");
+        //resolver.s
+        resolver.setOrder(1);
+        return resolver;
+    }
+    
 /*	@Bean
 	public EmbeddedServletContainerFactory servletContainer() {
 		TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
@@ -63,19 +72,6 @@ public class TrantorMainConfig {
         return resolver;
     }*/
 	
-	@Bean
-    public ViewResolver jspViewResolver() {
-        //ViewResolver resolver = new InternalResourceViewResolver();
-		InternalResourceViewResolver  resolver = new InternalResourceViewResolver ();
-        resolver.setPrefix("/WEB-INF/");
-        resolver.setSuffix(".jsp");
-        //resolver.setViewClass(JstlView.class);
-        resolver.setViewNames("jsp/*");
-        //resolver.s
-        resolver.setOrder(1);
-        return resolver;
-    }
-	
 /*	//@Bean
 	public ViewResolver thymeleafViewResolver(SpringTemplateEngine templateEngine) {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
@@ -99,6 +95,50 @@ public class TrantorMainConfig {
 		resolver.setTemplateMode("HTML5");
 		resolver.setOrder(1);
 		return resolver;
+	}*/
+	
+	/*@Bean
+	public HibernateJpaSessionFactoryBean sessionFactory() {
+	    return new HibernateJpaSessionFactoryBean();
+	}*/
+	
+/*	@Autowired
+	private EntityManagerFactory entityManagerFactory;
+
+	@Bean
+	public SessionFactory getSessionFactory() {
+	    if (entityManagerFactory.unwrap(SessionFactory.class) == null) {
+	        throw new NullPointerException("factory is not a hibernate factory");
+	    }
+	    return entityManagerFactory.unwrap(SessionFactory.class);
+	}*/
+	
+/*	   @Autowired
+	    @Bean(name="sessionFactory")
+	    public SessionFactory sessionFactory(HibernateEntityManagerFactory factory) {
+	        return factory.getSessionFactory();
+	    }  */
+	
+/*	@Bean
+    public HibernateJpaSessionFactoryBean sessionFactory() {
+        return new HibernateJpaSessionFactoryBean();
+    }*/
+	
+/*	@Bean
+	public SessionFactory sessionFactory() {
+		return new LocalSessionFactoryBuilder(getDataSource())
+		   .addAnnotatedClasses(RareBook.class)
+		   .buildSessionFactory();
+	}
+	@Bean
+	public DataSource getDataSource() {
+	    BasicDataSource dataSource = new BasicDataSource();
+	    dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+	    dataSource.setUrl("jdbc:mysql://localhost:3306/trantor");
+	    dataSource.setUsername("tom");
+	    dataSource.setPassword("Secret1");
+	 
+	    return dataSource;
 	}*/
 }
 

@@ -17,6 +17,8 @@ public class TrantorSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 			.antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
 			.and().formLogin();
+		
+		hs.csrf().disable();
 	}
 	
 	@Autowired
