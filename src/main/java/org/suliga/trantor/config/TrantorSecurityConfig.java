@@ -14,10 +14,12 @@ public class TrantorSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity hs) throws Exception {
 		hs.authorizeRequests()
 			.antMatchers("/").permitAll()
-			//.antMatchers("/myupload/**").access("hasRole('ROLE_USER')")
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+			//.antMatchers("/rest/**").access("hasRole('ROLE_USER')")
 			.antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
-			.and().formLogin();
+			.and().httpBasic().and().formLogin();
+		
+		//hs.csrf().disable();
 	}
 	
 	@Autowired

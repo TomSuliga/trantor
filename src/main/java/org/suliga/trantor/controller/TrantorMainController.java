@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.suliga.trantor.model.Car;
+import org.suliga.trantor.model.CarRepo;
+import org.suliga.trantor.model.Driver;
+import org.suliga.trantor.model.DriverRepo;
 import org.suliga.trantor.model.Person;
+import org.suliga.trantor.model.RareBook;
+import org.suliga.trantor.model.RareBookRepository;
+import org.suliga.trantor.service.CarDriverService;
 import org.suliga.trantor.service.MinesweeperService;
 import org.suliga.trantor.service.crossword.CrosswordPuzzleService;
 import org.suliga.trantor.service.earthquake.EarthquakeService;
@@ -35,6 +43,18 @@ public class TrantorMainController {
 	
 	@Autowired
     private HttpServletRequest request;
+	
+	@Autowired
+	private RareBookRepository rareBookRepository;
+	
+    @Autowired
+    private CarRepo carRepo;
+    
+    @Autowired
+    private DriverRepo driverRepo;
+    
+    @Autowired
+    private CarDriverService carDriverService;
 	
 	@RequestMapping("/")
 	public String home(Model model) { // Model = interface, ModelMap = class
@@ -77,7 +97,7 @@ public class TrantorMainController {
 		return "dba";
 	}
 	
-	@RequestMapping("/temp")
+	@RequestMapping("/test1")
 	public String temp(Model model) { // Model = interface, ModelMap = class
 		model.addAttribute("safeText", "Trantor Tech");
 		model.addAttribute("unsafeText", "This is <b>Bold</b>");
@@ -88,7 +108,7 @@ public class TrantorMainController {
 		persons.add(new Person("James Bond", 37, "Secret Agent"));
 		persons.add(new Person("Lisa Simpson", 13, "Actress"));
 		model.addAttribute("persons",persons);
-		return "temp";
+		return "test1";
 	}
 	
 	@RequestMapping("/try1")
@@ -96,7 +116,22 @@ public class TrantorMainController {
 		model.addAttribute("name","Tom");
 		model.addAttribute("age","54");
 		model.addAttribute("id","123XYZ");
+		System.out.println("server.context-path=" + System.getProperty("server.context-path"));
 		return "jsp/try1";
+	}
+	
+	@GetMapping("/cardriver")
+	public String cardriver(Model model) {
+		model.addAttribute("cars", carRepo.findAll());
+		model.addAttribute("drivers", driverRepo.findAll());
+		return "cardriver";
+	}
+	
+	@PostMapping("/cardriver")
+	public String carddriverPost(Model model, Car car, Driver driver, String carId, String driverId) {
+		carDriverService.add(car, driver);
+		carDriverService.remove(carId, driverId);
+		return "redirect:/cardriver";
 	}
 	
 	@GetMapping("/myupload")
@@ -105,34 +140,70 @@ public class TrantorMainController {
     }
 	
 	@PostMapping("/myupload")
-    public String handleFileUploadPost(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+    public String handleFileUploadPost(
+    		@RequestParam("file1") MultipartFile file1,
+    		@RequestParam("file2") MultipartFile file2,
+            RedirectAttributes redirectAttributes) {
 
-		File file2 = new File("temp/" + file.getOriginalFilename());
-		System.out.println("file2=" + file2.getAbsolutePath());
 		try {
             String uploadsDir = "/uploads/";
             String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
-            if(! new File(realPathtoUploads).exists())
-            {
+            
+            if (! new File(realPathtoUploads).exists()) {
                 new File(realPathtoUploads).mkdir();
             }
 
-            System.out.println("realPathtoUploads = " + realPathtoUploads);
-
-            String orgName = file.getOriginalFilename();
-            String filePath = realPathtoUploads + orgName;
-            File dest = new File(filePath);
-            file.transferTo(dest);
+            if (file1 != null && file1.getOriginalFilename().length() > 0) {
+            	file1.transferTo(new File(realPathtoUploads + file1.getOriginalFilename()));
+            }
+            
+            if (file2 != null && file2.getOriginalFilename().length() > 0) {
+            	file2.transferTo(new File(realPathtoUploads + file2.getOriginalFilename()));
+            }
+            
+    		if (file1 != null || file2 != null) {
+    			StringBuilder sb = new StringBuilder("You successfully uploaded:");
+    			if (file1 != null) {
+    				sb.append(" " + file1.getOriginalFilename());
+    			}
+    			if (file2 != null) {
+    				sb.append(" " + file2.getOriginalFilename());
+    			}
+    			redirectAttributes.addFlashAttribute("message", sb.toString());
+    		}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        //storageService.store(file);
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
 
+		// Needed to prevent multiple submits of same screen
         return "redirect:/myupload";
     }
+	
+	@GetMapping("/rarebooks")
+	@Transactional
+	public String getRareBooks(Model model) {
+		model.addAttribute("mainHeading", "Rare Books");
+		List<RareBook> list = (List<RareBook>) rareBookRepository.findAll();
+		model.addAttribute("rareBooks", list);
+		
+		//rareBookRepository.count();
+		//rareBookRepository.delete(entity);
+		//rareBookRepository.delete(id);
+		//rareBookRepository.deleteAll();
+		//rareBookRepository.findOne(id);
+		//rareBookRepository.save(entity);
+		
+		//Session session = sessionFactory.openSession();
+		//System.out.println("sessionFactory.openSession()=" + session);
+		//session.beginTransaction();
+		//rareBookRepository.save(new RareBook("X Title 1", "X Author 1", Condition.EXCELLENT, true));
+		//rareBookRepository.save(new RareBook("X Title 2", "X Author 2", Condition.EXCELLENT, true));
+		//if (System.currentTimeMillis() > 1) {
+		//	throw new RuntimeException("temp");
+		//}
+		//session.getTransaction().commit();
+		return "rarebooks";
+	}
 }
 
 

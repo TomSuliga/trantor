@@ -1,0 +1,39 @@
+h1 {
+	color: blue;
+}
+
+table {
+	border: 1px solid black;
+	border-collapse: collapse;
+	margin: 1em;
+}
+
+th, td {
+	padding: .5em;
+	border: 1px solid black;
+}
+
+th {
+	background-color: #8080ff;
+}
+
+td {
+	background-color: #bccfef;
+}
+
+label {
+    display: inline-block;
+    width: 8em;
+}
+
+input {
+    width: 15em;
+}
+
+.button {
+    display: inline-block;
+    width: 8em;
+}
+
+
+

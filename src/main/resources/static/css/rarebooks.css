@@ -1,0 +1,13 @@
+@CHARSET "ISO-8859-1";
+
+tr:nth-child(even) {
+    background-color: #bbf;
+}
+
+tr:nth-child(odd) {
+    background-color: #ccf;
+}
+
+table tr:hover td {
+	background: #eef;
+}	

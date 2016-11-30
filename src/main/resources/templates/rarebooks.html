@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="us" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>Rare Books</title>
+<link href="css/blue_style.css" rel="stylesheet">
+<link href="css/rarebooks.css" rel="stylesheet">
+</head>
+
+<body>
+<h1 th:text="${mainHeading}">Main Heading</h1>
+<table id="myTable" class="tablesorter">
+	<thead>
+		<tr>
+			<th>Author</th>
+			<th>Title</th>
+			<th>Condition</th>
+			<th>Available</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="book:${rareBooks}">
+			<td th:text="${book.author}">Author</td>
+			<td th:text="${book.title}">Title</td>
+			<td th:text="${#strings.capitalize(#strings.toLowerCase(book.condition))}">Condition</td>
+			<td th:text="${book.available == true ? 'Yes' : 'No'}">Available</td>
+		</tr>
+	</tbody>
+</table>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="js/rarebooks.js"></script>
+</body>
+</html>
