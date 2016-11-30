@@ -8,8 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.suliga.trantor.model.Condition;
+import org.suliga.trantor.model.Car;
+import org.suliga.trantor.model.CarRepo;
+import org.suliga.trantor.model.Driver;
+import org.suliga.trantor.model.DriverRepo;
 import org.suliga.trantor.model.Person;
 import org.suliga.trantor.model.RareBook;
 import org.suliga.trantor.model.RareBookRepository;
+import org.suliga.trantor.service.CarDriverService;
 import org.suliga.trantor.service.MinesweeperService;
 import org.suliga.trantor.service.crossword.CrosswordPuzzleService;
 import org.suliga.trantor.service.earthquake.EarthquakeService;
@@ -46,7 +48,13 @@ public class TrantorMainController {
 	private RareBookRepository rareBookRepository;
 	
     @Autowired
-    private SessionFactory sessionFactory;
+    private CarRepo carRepo;
+    
+    @Autowired
+    private DriverRepo driverRepo;
+    
+    @Autowired
+    private CarDriverService carDriverService;
 	
 	@RequestMapping("/")
 	public String home(Model model) { // Model = interface, ModelMap = class
@@ -110,6 +118,20 @@ public class TrantorMainController {
 		model.addAttribute("id","123XYZ");
 		System.out.println("server.context-path=" + System.getProperty("server.context-path"));
 		return "jsp/try1";
+	}
+	
+	@GetMapping("/cardriver")
+	public String cardriver(Model model) {
+		model.addAttribute("cars", carRepo.findAll());
+		model.addAttribute("drivers", driverRepo.findAll());
+		return "cardriver";
+	}
+	
+	@PostMapping("/cardriver")
+	public String carddriverPost(Model model, Car car, Driver driver, String carId, String driverId) {
+		carDriverService.add(car, driver);
+		carDriverService.remove(carId, driverId);
+		return "redirect:/cardriver";
 	}
 	
 	@GetMapping("/myupload")
