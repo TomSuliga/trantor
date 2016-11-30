@@ -15,10 +15,11 @@ public class TrantorSecurityConfig extends WebSecurityConfigurerAdapter {
 		hs.authorizeRequests()
 			.antMatchers("/").permitAll()
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+			.antMatchers("/rest/**").access("hasRole('ROLE_USER')")
 			.antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
-			.and().formLogin();
+			.and().httpBasic().and().formLogin();
 		
-		hs.csrf().disable();
+		//hs.csrf().disable();
 	}
 	
 	@Autowired

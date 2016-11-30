@@ -42,7 +42,7 @@ public class TrantorMainConfig {
 				.groupName("greetings")
 				.apiInfo(apiInfo())
 				.select()
-				.paths(PathSelectors.regex("/greeting.*"))
+				.paths(PathSelectors.regex("/rest/greeting.*"))
 				.build();
 	}
 
