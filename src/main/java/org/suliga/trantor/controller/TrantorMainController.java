@@ -118,32 +118,42 @@ public class TrantorMainController {
     }
 	
 	@PostMapping("/myupload")
-    public String handleFileUploadPost(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+    public String handleFileUploadPost(
+    		@RequestParam("file1") MultipartFile file1,
+    		@RequestParam("file2") MultipartFile file2,
+            RedirectAttributes redirectAttributes) {
 
-		File file2 = new File("temp/" + file.getOriginalFilename());
-		System.out.println("file2=" + file2.getAbsolutePath());
 		try {
             String uploadsDir = "/uploads/";
             String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
-            if(! new File(realPathtoUploads).exists())
-            {
+            
+            if (! new File(realPathtoUploads).exists()) {
                 new File(realPathtoUploads).mkdir();
             }
 
-            System.out.println("realPathtoUploads = " + realPathtoUploads);
-
-            String orgName = file.getOriginalFilename();
-            String filePath = realPathtoUploads + orgName;
-            File dest = new File(filePath);
-            file.transferTo(dest);
+            if (file1 != null && file1.getOriginalFilename().length() > 0) {
+            	file1.transferTo(new File(realPathtoUploads + file1.getOriginalFilename()));
+            }
+            
+            if (file2 != null && file2.getOriginalFilename().length() > 0) {
+            	file2.transferTo(new File(realPathtoUploads + file2.getOriginalFilename()));
+            }
+            
+    		if (file1 != null || file2 != null) {
+    			StringBuilder sb = new StringBuilder("You successfully uploaded:");
+    			if (file1 != null) {
+    				sb.append(" " + file1.getOriginalFilename());
+    			}
+    			if (file2 != null) {
+    				sb.append(" " + file2.getOriginalFilename());
+    			}
+    			redirectAttributes.addFlashAttribute("message", sb.toString());
+    		}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        //storageService.store(file);
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
 
+		// Needed to prevent multiple submits of same screen
         return "redirect:/myupload";
     }
 	
