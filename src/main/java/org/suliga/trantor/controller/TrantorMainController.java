@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.suliga.trantor.model.Car;
+import org.suliga.trantor.model.TCar;
 import org.suliga.trantor.model.CarRepo;
-import org.suliga.trantor.model.Driver;
+import org.suliga.trantor.model.TDriver;
 import org.suliga.trantor.model.DriverRepo;
 import org.suliga.trantor.model.Person;
 import org.suliga.trantor.model.RareBook;
@@ -60,6 +60,11 @@ public class TrantorMainController {
 	public String home(Model model) { // Model = interface, ModelMap = class
 		model.addAttribute("applicationName", "Trantor Tech");
 		return "index";
+	}
+	
+	@GetMapping("/login")
+	public String login(Model model) {
+		return "login";
 	}
 	
 	@RequestMapping(value = "/earthquake", method = RequestMethod.GET)
@@ -128,7 +133,7 @@ public class TrantorMainController {
 	}
 	
 	@PostMapping("/cardriver")
-	public String carddriverPost(Model model, Car car, Driver driver, String carId, String driverId) {
+	public String carddriverPost(Model model, TCar car, TDriver driver, String carId, String driverId) {
 		carDriverService.add(car, driver);
 		carDriverService.remove(carId, driverId);
 		return "redirect:/cardriver";

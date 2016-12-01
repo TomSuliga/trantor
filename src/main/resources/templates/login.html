@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="us" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link href="css/login.css" rel="stylesheet">
+<title>Login</title>
+</head>
+<body>
+<h1>Trantor Login</h1>
+<form method="post">
+<label for="username">Username</label>
+<input type="text" id="username" name="username" placeholder="Username">
+<br>
+<label for="password">Password</label>
+<input type="password" id="password" name="password", plcaeholder="Password">
+<br>
+<label for="button"></label>
+<input type="submit" id="button" class="button">
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+</form>
+</body>
+</html>

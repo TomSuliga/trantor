@@ -8,8 +8,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="CAR")
-public class Car {
+@Table(name="cars")
+public class TCar {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -21,7 +21,7 @@ public class Car {
 	private int year;
 	
 	@OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private Driver driver;
+	private TDriver driver;
 
 	public Long getId() {
 		return id;
@@ -55,11 +55,11 @@ public class Car {
 		this.year = year;
 	}
 
-	public Driver getDriver() {
+	public TDriver getDriver() {
 		return driver;
 	}
 
-	public void setDriver(Driver driver) {
+	public void setDriver(TDriver driver) {
 		this.driver = driver;
 	}
 	

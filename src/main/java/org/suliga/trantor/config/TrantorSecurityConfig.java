@@ -1,31 +1,46 @@
 package org.suliga.trantor.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class TrantorSecurityConfig extends WebSecurityConfigurerAdapter {
+	@Autowired
+	DataSource dataSource;
+	
 	@Override
 	protected void configure(HttpSecurity hs) throws Exception {
 		hs.authorizeRequests()
-			.antMatchers("/").permitAll()
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-			//.antMatchers("/rest/**").access("hasRole('ROLE_USER')")
 			.antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
-			.and().httpBasic().and().formLogin();
+			.antMatchers("/").permitAll()
+			.and().httpBasic()
+			.and().formLogin().loginPage("/login");
 		
 		//hs.csrf().disable();
 	}
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	  auth.inMemoryAuthentication().withUser("tom").password("a").roles("USER");
-	  auth.inMemoryAuthentication().withUser("admin").password("a").roles("ADMIN");
-	  auth.inMemoryAuthentication().withUser("dba").password("a").roles("DBA");
+		auth.jdbcAuthentication()
+			.dataSource(dataSource)
+			.passwordEncoder(new BCryptPasswordEncoder());
+		
+/*		auth.inMemoryAuthentication()
+			.withUser("user").password("a").roles("USER").and()
+	  		.withUser("tom").password("a").roles("USER", "ADMIN", "DBA").and()
+	  		.withUser("admin").password("a").roles("ADMIN").and()
+			.withUser("dba").password("a").roles("DBA");*/
 	}
 }
