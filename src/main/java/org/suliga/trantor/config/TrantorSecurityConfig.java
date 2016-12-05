@@ -19,10 +19,12 @@ public class TrantorSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	DataSource dataSource;
 	
+
 	@Override
 	protected void configure(HttpSecurity hs) throws Exception {
 		hs.authorizeRequests()
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+			.antMatchers("/cardriver/**").access("hasRole('ROLE_ADMIN')")
 			.antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
 			.antMatchers("/").permitAll()
 			.and().httpBasic()

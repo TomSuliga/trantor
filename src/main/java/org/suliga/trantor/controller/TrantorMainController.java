@@ -6,9 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,6 +71,30 @@ public class TrantorMainController {
 		return "login";
 	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth != null){    
+	        new SecurityContextLogoutHandler().logout(request, response, auth);
+	    }
+	    return "redirect:/";
+	}
+	
+	@GetMapping("/ajaxphp")
+	public String ajaxphp(Model model) {
+		return "ajaxphp";
+	}
+	
+	@GetMapping("/ws")
+	public String ws(Model model) {
+		return "ws";
+	}
+	
+	@GetMapping("/required")
+	public String required(Model model) {
+		return "required";
+	}
+	
 	@RequestMapping(value = "/earthquake", method = RequestMethod.GET)
 	public String getEarthquake(Model model, String period) {
 		model.addAttribute("eqdata", earthquakeService.getTopSixEvents(period));
@@ -85,7 +113,11 @@ public class TrantorMainController {
 	}
 	
 	@RequestMapping(value="/minesweeper", method=RequestMethod.GET)
-	public String getMinesweeper(Model model) {
+	public String getMinesweeper(Model model, HttpServletRequest request) {
+		System.out.println("ms request=" 
+				+ request.getLocalName() + ", " 
+				+ request.getRemoteUser() + ", " 
+				+ request.getSession().getId());
 		model.addAttribute("grid", minesweeperService.getGrid());
 		return "minesweeper";
 	}
