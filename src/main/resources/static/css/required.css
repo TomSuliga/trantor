@@ -1,0 +1,21 @@
+@CHARSET "ISO-8859-1";
+
+label {
+	display: inline-block;
+	width: 7em;
+	margin: .5em;
+}
+
+input:required:invalid, input:focus:invalid {
+    background-image: url(/images/invalid.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+	background-size: 1em;
+}
+  
+input:required:valid {
+    background-image: url(/images/valid.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+	background-size: 1em;
+}

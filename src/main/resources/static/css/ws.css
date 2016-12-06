@@ -1,0 +1,14 @@
+@CHARSET "ISO-8859-1";
+
+button {
+    display: inline-block;
+    width: 8em;
+    margin: .5em;
+    height: 1.8em;
+}
+
+input {
+	border: 1px solid gray;
+	width: 8em;
+	height: 1.5em;
+}

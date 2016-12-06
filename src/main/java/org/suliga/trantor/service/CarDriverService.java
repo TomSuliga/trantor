@@ -4,9 +4,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.suliga.trantor.model.Car;
+import org.suliga.trantor.model.TCar;
 import org.suliga.trantor.model.CarRepo;
-import org.suliga.trantor.model.Driver;
+import org.suliga.trantor.model.TDriver;
 import org.suliga.trantor.model.DriverRepo;
 
 @Service
@@ -18,7 +18,7 @@ public class CarDriverService {
 	private DriverRepo driverRepo;
 	
 	@Transactional
-	public void add(Car car, Driver driver) {
+	public void add(TCar car, TDriver driver) {
 		if (car == null || car.getMake() == null || driver == null || driver.getFirstName() == null) {
 			return;
 		}

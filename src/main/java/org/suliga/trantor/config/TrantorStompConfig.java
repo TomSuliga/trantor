@@ -8,11 +8,11 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketStompConfig extends AbstractWebSocketMessageBrokerConfigurer {
+public class TrantorStompConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/minesweeper1").withSockJS();
+		registry.addEndpoint("/minesweeper1", "/count").withSockJS();
 	}
 
 	@Override
@@ -21,6 +21,6 @@ public class WebSocketStompConfig extends AbstractWebSocketMessageBrokerConfigur
 		registry.enableSimpleBroker("/topic");
 		
 		// to server (from web client javascript via stomp.send) - prefix
-		registry.setApplicationDestinationPrefixes("/minesweeper2");
+		registry.setApplicationDestinationPrefixes("/minesweeper2", "/count");
 	}
 }
