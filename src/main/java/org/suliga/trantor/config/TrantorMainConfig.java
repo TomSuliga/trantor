@@ -1,8 +1,10 @@
 package org.suliga.trantor.config;
 
+import org.h2.server.web.WebServlet;
 import org.hibernate.SessionFactory;
 import org.hibernate.jpa.HibernateEntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
@@ -56,6 +58,23 @@ public class TrantorMainConfig {
 				.version("2.0")
 				.build();
 	}
+	
+/*	@Bean
+	public ServletRegistrationBean h2servletRegistration() {
+	    ServletRegistrationBean registration = new ServletRegistrationBean(new WebServlet());
+	    registration.addUrlMappings("/console/*");
+	    return registration;
+	}*/
+	
+ /*   private static final String TEMP_DIRECTORY = System.getProperty("java.io.tmpdir");
+    
+    @Bean(name = "mainDataSource")
+    public DataSource createMainDataSource() {
+        JdbcDataSource ds = new JdbcDataSource();
+        ds.setURL("jdbc:h2:"+TEMP_DIRECTORY+"/testdb;MODE=MySQL");
+        return ds;
+    }*/
+
 
 	/*
 	 * @Bean public EmbeddedServletContainerFactory servletContainer() {

@@ -31,6 +31,10 @@ public class TrantorSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and().formLogin().loginPage("/login");
 		
 		//hs.csrf().disable();
+		
+		// add this line to use H2 web console
+	    hs.headers().frameOptions().disable();
+	    hs.csrf().ignoringAntMatchers("/h2-console/**", "/console/**");
 	}
 	
 	@Autowired
