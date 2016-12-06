@@ -16,7 +16,7 @@ public class MineSweeper implements MinesweeperService {
 		grid = new Grid();
 		return grid;
 	}
-
+	
 	@Override
 	public Set<RowCol> processClickedSpot(int row, int col) {
 		GridSpot spot = grid.getSpots()[row][col];
