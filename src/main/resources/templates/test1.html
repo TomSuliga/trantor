@@ -5,6 +5,9 @@
 <title>Temp</title>
 </head>
 <body>
+	<!-- <h2 id="h2title9">Click Me</h2> -->
+	<h2 onclick="h2clicked()" id='h2clicked'>Click Me</h2>
+	<span id='myspan'>Temp</span>
 	<h1 th:text="${safeText}">Temp Heading</h1>
 	<p th:utext="${unsafeText}">Not yet bold</p>
 	<div th:each="counter:${#numbers.sequence(1,3)}"> <!-- Inclusive so 1,2,3 -->
